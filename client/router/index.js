@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2019-12-20 13:54:45
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2020-03-19 08:53:27
+ * @LastEditTime: 2020-03-19 10:00:29
  */
 import Vue from "vue";
 import Router from "vue-router";
@@ -24,15 +24,11 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "index",
+      name: "/index",
       component: index,
       meta: { title: "首页" },
+      redirect: '/product',
       children: [
-        {
-          path: "/",
-          name: "product",
-          component: Product
-        },
         {
           path: "/product",
           name: "product",
