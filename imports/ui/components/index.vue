@@ -2,8 +2,8 @@
  * @Descripttion: 
  * @Author: yizheng.yuan
  * @Date: 2019-12-21 15:07:03
- * @LastEditors  : yizheng.yuan
- * @LastEditTime : 2019-12-26 11:49:20
+ * @LastEditors: yizheng.yuan
+ * @LastEditTime: 2020-03-19 09:11:39
  -->
 <template>
   <div class="index">
@@ -19,7 +19,9 @@
   //组件
   import LeftMenu from '/imports/ui//components/LeftMenu'
   import MainContent from '/imports/ui/components/MainContent'
-
+  // 集合
+  import '../../collections/posts'
+  import '../../collections/data'
   export default {
     name: "index",
     data() {
