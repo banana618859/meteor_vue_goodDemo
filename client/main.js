@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2019-12-26 10:58:05
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2020-03-19 08:41:55
+ * @LastEditTime: 2020-04-14 10:53:08
  */
 import Vue from 'vue';
 import App from '/imports/ui/App.vue';
@@ -12,7 +12,10 @@ import './main.html';
 
 import router from "./router";
 import "/public/common.css";
-import "/public/font/iconfont.css"
+import "/public/fonts/iconfont.css"
+
+import VueMeteorTracker from 'vue-meteor-tracker'
+Vue.use(VueMeteorTracker)
 
 import Axios from "axios";
 import VueAxios from "vue-axios";

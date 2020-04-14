@@ -1,3 +1,12 @@
 body {
   font-family: sans-serif;
 }
+.hand{
+  cursor: pointer;
+}
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}

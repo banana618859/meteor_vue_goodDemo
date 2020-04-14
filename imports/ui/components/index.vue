@@ -3,21 +3,34 @@
  * @Author: yizheng.yuan
  * @Date: 2019-12-21 15:07:03
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2020-03-19 09:11:39
+ * @LastEditTime: 2020-04-14 10:40:36
  -->
 <template>
+  
   <div class="index">
-    <div style="position: absolute; left: 0; top: 0; background-color: #eee; height: 100vh;">
-      <LeftMenu></LeftMenu>
+    <div v-if="!$subReady.post">Loading...</div>
+    <div v-else>
+      <div style="position: absolute; left: 0; top: 0; background-color: #eee; height: 100vh;">
+        <LeftMenu></LeftMenu>
+      </div>
+      <div style="padding-left: 200px; height: 100vh; background-color: #eee;">
+        <div style="position: absolute;right:10px; top:10px; z-index: 5;color: white;">
+          <p>
+            post:{{theTime}}
+          </p>
+          <p>
+            123:{{themsg}}
+          </p>
+        </div>
+        <MainContent></MainContent>
+      </div>
     </div>
-    <div style="padding-left: 200px; height: 100vh; background-color: #eee;">
-      <MainContent></MainContent>
-    </div>
+    
   </div>
 </template>
 <script>
   //组件
-  import LeftMenu from '/imports/ui//components/LeftMenu'
+  import LeftMenu from '/imports/ui/components/LeftMenu'
   import MainContent from '/imports/ui/components/MainContent'
   // 集合
   import '../../collections/posts'
@@ -34,8 +47,16 @@
       LeftMenu,
       MainContent
     },
+    
     mounted() {
+      // 调用后台方法
+      Meteor.call('getusb',(e,r)=>{
+        console.log('rel11:',e,r.length)
+      })
 
+      Meteor.call('updateName',(e,r)=>{
+        console.log('updateName:',e,r.length)
+      })
 
     },
     methods: {
@@ -67,6 +88,30 @@
       },
       activity() {
         this.$router.push("/activity");
+      }
+    },
+    // Meteor reactivity
+    meteor: {
+      // Subscriptions - Errors not reported spelling and capitalization.
+      $subscribe: {
+        'post': [],
+        'othermsg': ''
+      },
+      // A helper function to get the current time
+      // currentTime () {
+      //   console.log('Calculating currentTime',posts);
+      //   // var t = Time.findOne('currentTime') || {};
+      //   return 'asdfas'+posts;
+      // },
+      themsg(){
+        let msg = Data.find().fetch()
+        console.log('othermsg',msg);
+        return msg.length ? msg[0].name : '';
+      },
+      theTime () {
+        var t = Posts.find().fetch();
+        console.log('theTime',t);
+        return 'asdfas'+t.length;
       }
     }
   };

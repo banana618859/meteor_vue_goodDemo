@@ -2,8 +2,8 @@
  * @Descripttion: 
  * @Author: yizheng.yuan
  * @Date: 2019-12-26 00:20:01
- * @LastEditors  : yizheng.yuan
- * @LastEditTime : 2019-12-26 00:39:06
+ * @LastEditors: yizheng.yuan
+ * @LastEditTime: 2020-04-13 11:50:57
  -->
 <template>
     <div>
@@ -30,7 +30,7 @@
             return {
                 tableData: [{
                     date: '2016-05-03',
-                    name: '王小虎',
+                    name: '王小虎222',
                     province: '上海',
                     city: '普陀区',
                     address: '上海市普陀区金沙江路 1518 弄',

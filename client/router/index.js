@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2019-12-20 13:54:45
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2020-03-19 10:00:29
+ * @LastEditTime: 2020-03-19 10:38:23
  */
 import Vue from "vue";
 import Router from "vue-router";
@@ -35,7 +35,7 @@ export default new Router({
           component: Product
         },
         {
-          path: "/kind",
+          path: "/kind/:id",
           name: "kind",
           component: kind
         },
