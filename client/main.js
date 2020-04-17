@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2019-12-26 10:58:05
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2020-04-14 10:53:08
+ * @LastEditTime: 2020-04-17 17:06:50
  */
 import Vue from 'vue';
 import App from '/imports/ui/App.vue';
@@ -25,6 +25,10 @@ Vue.use(VueAxios, Axios);
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
+
+// mount with global
+import VueContextMenu from 'vue-contextmenu'
+Vue.use(VueContextMenu)
 
 
 // vuex

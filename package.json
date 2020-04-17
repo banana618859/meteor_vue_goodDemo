@@ -16,6 +16,7 @@
     "usb": "^1.6.2",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
+    "vue-contextmenu": "^1.5.10",
     "vue-cookies": "^1.6.1",
     "vue-meteor-tracker": "^2.0.0-beta.5",
     "vue-router": "^3.1.3",

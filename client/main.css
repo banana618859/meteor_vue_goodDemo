@@ -1,3 +1,16 @@
+*{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  
+  /*禁止鼠标拖动时，选中文本*/
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
 body {
   font-family: sans-serif;
 }
