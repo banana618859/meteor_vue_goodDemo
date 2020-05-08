@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2019-12-21 15:07:03
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2020-04-16 10:08:29
+ * @LastEditTime: 2020-05-08 16:35:50
  -->
 <template>
   
@@ -30,7 +30,8 @@
 </template>
 <script>
   //组件
-  import LeftMenu from '/imports/ui/components/LeftMenu'
+  // import LeftMenu from '/imports/ui/components/LeftMenu'
+  import LeftMenu from '/imports/ui/components/LeftMenuOld'
   import MainContent from '/imports/ui/components/MainContent'
   // 集合
   import '../../collections/posts'
