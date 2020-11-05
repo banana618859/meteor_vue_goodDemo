@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2019-12-21 15:07:03
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2020-11-05 10:05:21
+ * @LastEditTime: 2020-11-05 13:43:35
  -->
 <template>
   
@@ -62,7 +62,7 @@
         console.log('updateName:',e,r.length)
       })
 
-      this.testFun('http://localhost:7000')
+      this.testFun('192.168.0.111:7000')
 
     },
     methods: {

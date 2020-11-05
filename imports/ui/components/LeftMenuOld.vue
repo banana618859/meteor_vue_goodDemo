@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2019-12-25 08:32:39
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2020-03-19 10:38:36
+ * @LastEditTime: 2020-11-05 16:21:00
  -->
 <template>
     <div class="leftmenu" style="width: 200px; height: 100%;">
@@ -49,6 +49,12 @@
                     {
                         href: '/right',
                         title: '权限管理',
+                        icon: 'iconfont icon-quanxianpeizhi',
+
+                    },
+                    {
+                        href: '/window',
+                        title: '窗口管理',
                         icon: 'iconfont icon-quanxianpeizhi',
 
                     }

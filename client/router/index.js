@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2019-12-20 13:54:45
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2020-03-19 10:38:23
+ * @LastEditTime: 2020-11-05 16:22:12
  */
 import Vue from "vue";
 import Router from "vue-router";
@@ -13,6 +13,7 @@ import kind from "/imports/ui/components/kind";
 import user from "/imports/ui/components/user";
 import order from "/imports/ui/components/order";
 import right from "/imports/ui/components/right";
+import window from "/imports/ui/components/window";
 
 
 
@@ -53,6 +54,11 @@ export default new Router({
           path: "/right",
           name: "right",
           component: right
+        },
+        {
+          path: "/window",
+          name: "window",
+          component: window
         }
       ]
     }
