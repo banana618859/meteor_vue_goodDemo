@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2019-12-21 15:07:03
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2020-05-08 16:35:50
+ * @LastEditTime: 2020-11-05 10:05:21
  -->
 <template>
   
@@ -36,6 +36,9 @@
   // 集合
   import '../../collections/posts'
   import '../../collections/data'
+
+  import { DDPConnect } from './DDPConnect';
+
   export default {
     name: "index",
     data() {
@@ -59,8 +62,126 @@
         console.log('updateName:',e,r.length)
       })
 
+      this.testFun('http://localhost:7000')
+
     },
     methods: {
+      async testFun(remote_url){
+        console.log('remote_url:',remote_url)
+        // 等待ddp连接结果
+        let connObj;
+        try
+        {
+          connObj = await this.DDPconnect(remote_url, false);
+        } catch (error)
+        {
+          this.$alert('Connect user server has error!', 'error')
+        }
+        console.log('-logout-connObj',connObj);
+        // 处理断网时退出登录的情况
+        if (connObj.stop)
+        {
+          console.error('连接中断');
+          return;
+        }else{
+          console.log('连接成功')
+        }
+        let rel = await this.call(connObj,'testFun','a','b');
+        console.log('rel:',rel)
+      },
+      async call(ddp, name)
+      {
+        console.log('#####--call:', name)
+        var args = Array.prototype.slice.call(arguments, 2)
+        return new Promise((resolve, reject) =>
+        {
+          console.log('--...args:', ...args)
+          ddp.call(name, ...args, function (error, data)
+          {
+            console.log('call:', name, error, data)
+            // resolve(data)
+            if (error) {
+              reject(error)
+            } else {
+              resolve(data)
+            }
+          })
+        })
+      },
+      /**
+       * @Descripttion: 连接设备DDP方法
+       * @Param: 1.deviceUrl,{type: String},em:'http://localhost:7600' 2.method,{type: String}
+       * @Return: 
+       */
+      deviceDDP(deviceUrl, method)
+      {
+        return new Promise((resolve, reject) =>
+        {
+          // 前端直接调用实现
+          (async () =>
+          {
+            console.log('--deviceDDP:', deviceUrl)
+            let data = {
+              'deviceUrl': deviceUrl,
+              'method': method
+            }
+            var client = new nysaDDPClient()
+            var b = await client.connect(data.deviceUrl, 3000);
+            console.log('--doLoop-p--前端调用ddp', b)
+            if (b) {
+              if (data.hasOwnProperty('method') && data.method) {
+                var result1 = await this.call(client, data.method);
+                resolve(result1)
+              } else {
+                resolve(b)
+              }
+
+            } else {
+              console.log('client.connect false');
+              resolve(false)
+            }
+          })()
+
+          // 调用后台 - 实现ddp访问
+          // Meteor.call('getDDP', data, (err, result) =>
+          // {
+          // 	if (!err) {
+          // 		console.log('-######################-success ddp', result);
+          // 		resolve(result)
+          // 	} else {
+          // 		cosnole.log('err:', err);
+          // 		reject(err)
+          // 	}
+          // })
+        })
+      },
+      GetDDPConnect(remote_url)
+      {
+        return this.allMeteor.find(item =>
+        {
+          return item.getUrl() === remote_url
+        })
+      },
+      // 创建连接
+      DDPconnect(remote_url, callback)
+      {
+        // 返回一个promise对象
+        return new Promise(async (resolve, reject) =>
+        {
+          console.log('---DDPConnect-url-124-：', remote_url,)
+          if (!remote_url) {
+            this.$alert('Please set userServer!');
+            resolve(null)
+          }
+
+            console.log('-----need creat new connect!----');
+            // 调用连接方法
+            let conn = new DDPConnect(remote_url, callback)
+            await conn.connect()
+            resolve(conn)
+          
+        }) // Promise end
+      },
       getUserInfo() {
         // let openid = this.$cookies.get("openid");
         // console.log("---2openid:", openid);
