@@ -26,4 +26,13 @@ msavin:mongol
 fourseven:scss
 akryum:vue-sass
 
-cfs:http-methods
+# cfs:http-methods
+
+#Easily call client methods from server side.
+#https://github.com/anticoders/meteor-methods
+anti:methods
+
+#lodash _
+erasaur:meteor-lodash
+
+promise

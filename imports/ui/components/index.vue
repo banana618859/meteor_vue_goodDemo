@@ -3,24 +3,18 @@
  * @Author: yizheng.yuan
  * @Date: 2019-12-21 15:07:03
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2020-11-05 13:43:35
+ * @LastEditTime: 2020-12-07 14:57:28
  -->
 <template>
   
   <div class="index">
-    <div v-if="!$subReady.post">Loading...</div>
-    <div v-else>
+    <!-- <div v-if="!$subReady.message">Loading...</div> -->
+    <div>
       <div style="position: absolute; left: 0; top: 0; background-color: #eee; height: 100vh;">
         <LeftMenu></LeftMenu>
       </div>
       <div style="padding-left: 200px; height: 100vh; background-color: #eee;">
         <div style="position: absolute;right:10px; top:10px; z-index: 5;color: white;">
-          <p>
-            post:{{theTime}}
-          </p>
-          <p>
-            123:{{themsg}}
-          </p>
         </div>
         <MainContent></MainContent>
       </div>
@@ -37,7 +31,8 @@
   import '../../collections/posts'
   import '../../collections/data'
 
-  import { DDPConnect } from './DDPConnect';
+
+  import { DDPConnect } from '/imports/js/DDPConnect';
 
   export default {
     name: "index",
@@ -62,7 +57,7 @@
         console.log('updateName:',e,r.length)
       })
 
-      this.testFun('192.168.0.111:7000')
+      // this.testFun('127.0.0.1:7802')
 
     },
     methods: {
@@ -86,7 +81,7 @@
         }else{
           console.log('连接成功')
         }
-        let rel = await this.call(connObj,'testFun','a','b');
+        let rel = await this.call(connObj,'serverboard_ui2tcp','ka21');
         console.log('rel:',rel)
       },
       async call(ddp, name)
@@ -216,8 +211,9 @@
     meteor: {
       // Subscriptions - Errors not reported spelling and capitalization.
       $subscribe: {
-        'post': [],
-        'othermsg': ''
+        'message': []
+        // 'post': [],
+        // 'othermsg': ''
       },
       // A helper function to get the current time
       // currentTime () {
@@ -225,10 +221,13 @@
       //   // var t = Time.findOne('currentTime') || {};
       //   return 'asdfas'+posts;
       // },
-      themsg(){
-        let msg = Data.find().fetch()
-        console.log('othermsg',msg);
-        return msg.length ? msg[0].name : '';
+      message(){
+        let msg = message.find({},{
+          sort: {_id:-1},
+          limit:1
+        }).fetch()
+        console.log('message--change',msg);
+
       },
       theTime () {
         var t = Posts.find().fetch();

@@ -3,6 +3,7 @@ akryum:vue-component-dev-client@0.4.7
 akryum:vue-component-dev-server@0.1.4
 akryum:vue-sass@0.1.2
 allow-deny@1.1.0
+anti:methods@0.4.0
 autoupdate@1.6.0
 babel-compiler@7.4.2
 babel-runtime@1.4.0
@@ -15,7 +16,6 @@ boilerplate-generator@1.6.0
 caching-compiler@1.2.1
 caching-html-compiler@1.1.3
 callback-hook@1.2.0
-cfs:http-methods@0.0.32
 check@1.3.1
 ddp@1.4.0
 ddp-client@2.3.3
@@ -29,6 +29,7 @@ ecmascript-runtime@0.7.0
 ecmascript-runtime-client@0.9.0
 ecmascript-runtime-server@0.8.0
 ejson@1.1.1
+erasaur:meteor-lodash@4.0.0
 es5-shim@4.8.0
 fetch@0.1.1
 fourseven:scss@4.12.0
@@ -58,6 +59,7 @@ mongo@1.7.0
 mongo-decimal@0.1.1
 mongo-dev-server@1.1.0
 mongo-id@1.0.7
+mongo-livedata@1.0.12
 msavin:mongol@10.0.1
 npm-mongo@3.2.0
 observe-sequence@1.0.16

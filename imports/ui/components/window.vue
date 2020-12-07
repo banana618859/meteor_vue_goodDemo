@@ -17,6 +17,7 @@
     
     <!-- 所有新增页面 -->
     <div id="pageInner" style="position: relative; width: 100%;height: 100%; border: 1px solid red;">
+      
       <div
         v-for="(item,index) in allPage" 
         :key="item.id+index"  

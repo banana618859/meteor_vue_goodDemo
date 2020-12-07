@@ -3,13 +3,21 @@
  * @Author: yizheng.yuan
  * @Date: 2019-12-26 10:58:05
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2020-04-17 19:29:41
+ * @LastEditTime: 2020-12-07 15:13:27
  */
 import { Meteor } from 'meteor/meteor';
   // 集合
   import '../imports/collections/posts'
   import '../imports/collections/data'
   import '../imports/collections/otherData'
+  import '../imports/collections/message'
+
+// ws
+// import './wsc'
+
+import { DDPConnect } from '/imports/js/DDPConnect';
+
+
 var usb = require('usb')
 var fs = require('fs');
 var fs = require('fs');
@@ -38,6 +46,13 @@ let tree_node = {
 
 Meteor.startup(() => {
   // code to run on server at startup 
+  console.log('server-start1234');
+  var arguments=['user1','hello client']
+  Meteor.ClientCall.apply('123id', 'testClient', arguments, (err,rel)=>{
+    console.log('server:',err,rel)
+  })
+
+  // Meteor.call('testFun','127.0.0.1:7802')
 });
 
 var oneBound = Meteor.bindEnvironment((callback) => {
@@ -52,6 +67,140 @@ Meteor.publish('Data', function () {
 });
 
 Meteor.methods({
+  async testFun(remote_url){
+    console.log('remote_url:',remote_url)
+    // 等待ddp连接结果
+    let connObj;
+    try
+    {
+      connObj = await Meteor.call('DDPconnect', remote_url, false);
+    } catch (error)
+    {
+      console.log('Connect user server has error!', 'error')
+    }
+    console.log('-logout-connObj',connObj);
+    // 处理断网时退出登录的情况
+    if (connObj.stop)
+    {
+      console.error('连接中断');
+      return;
+    }else{
+      console.log('连接成功')
+    }
+    let rel = await Meteor.call('call',connObj,'serverboard_ui2tcp','ka21');
+    console.log('rel:',rel)
+  },
+  async call(ddp, name)
+  {
+    console.log('#####--call:', name)
+    var args = Array.prototype.slice.call(arguments, 2)
+    return new Promise((resolve, reject) =>
+    {
+      console.log('--...args:', ...args)
+      ddp.call(name, ...args, function (error, data)
+      {
+        console.log('call:', name, error, data)
+        // resolve(data)
+        if (error) {
+          reject(error)
+        } else {
+          resolve(data)
+        }
+      })
+    })
+  },
+  /**
+   * @Descripttion: 连接设备DDP方法
+   * @Param: 1.deviceUrl,{type: String},em:'http://localhost:7600' 2.method,{type: String}
+   * @Return: 
+   */
+  deviceDDP(deviceUrl, method)
+  {
+    return new Promise((resolve, reject) =>
+    {
+      // 前端直接调用实现
+      (async () =>
+      {
+        console.log('--deviceDDP:', deviceUrl)
+        let data = {
+          'deviceUrl': deviceUrl,
+          'method': method
+        }
+        var client = new nysaDDPClient()
+        var b = await client.connect(data.deviceUrl, 3000);
+        console.log('--doLoop-p--前端调用ddp', b)
+        if (b) {
+          if (data.hasOwnProperty('method') && data.method) {
+            var result1 = await this.call(client, data.method);
+            resolve(result1)
+          } else {
+            resolve(b)
+          }
+
+        } else {
+          console.log('client.connect false');
+          resolve(false)
+        }
+      })()
+
+      // 调用后台 - 实现ddp访问
+      // Meteor.call('getDDP', data, (err, result) =>
+      // {
+      // 	if (!err) {
+      // 		console.log('-######################-success ddp', result);
+      // 		resolve(result)
+      // 	} else {
+      // 		cosnole.log('err:', err);
+      // 		reject(err)
+      // 	}
+      // })
+    })
+  },
+  GetDDPConnect(remote_url)
+  {
+    return this.allMeteor.find(item =>
+    {
+      return item.getUrl() === remote_url
+    })
+  },
+  // 创建连接
+  DDPconnect(remote_url, callback)
+  {
+    // 返回一个promise对象
+    return new Promise(async (resolve, reject) =>
+    {
+      console.log('---DDPConnect-url-124-：', remote_url,)
+      if (!remote_url) {
+        console.log('Please set userServer!');
+        resolve(null)
+      }
+
+        console.log('-----need creat new connect!----');
+        // 调用连接方法
+        let conn = new DDPConnect(remote_url, callback)
+        await conn.connect()
+        resolve(conn)
+      
+    }) // Promise end
+  },
+  
+  test(second){
+    var arr = [...arguments]
+    console.log('test',JSON.stringify(arr),Date.now());
+    message.insert({
+      name: 'jetty',
+      age: Date.now()+''
+    })
+    // Meteor.setTimeout(()=>{
+    //     var arguments=['user2','hello client2']
+    //     Meteor.ClientCall.apply('123id', 'testClient', arguments, (err,rel)=>{
+    //       console.log('server:',err,rel)
+    //     })
+    //   },1000)
+    var obj={'msg': 'sub', 'id': 1, 'name': 'message', 'params': 'params'}
+    var obj='call success'
+    return JSON.stringify(obj);
+  },
   getPan(){
     // show  Windows letter
     function showLetter() {
